@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register - HairHub | Your Beauty Partner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #45b7d1;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            --gradient-3: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --warning-color: #f39c12;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: var(--gradient);
+            display: flex;
+            flex-direction: column;
+            color: var(--dark-color);
+            position: relative;
+            overflow-x: hidden;
+            padding-top: 80px;
+            /* Add padding to compensate for fixed header */
+        }
+
+        /* Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            /* Changed to fixed */
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(2deg);
+            }
+        }
+
+        /* Header - FIXED POSITIONING */
+        .header {
+            position: fixed;
+            /* Changed from sticky to fixed */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            /* Ensure it's above everything */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Add background on scroll */
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header.scrolled nav a {
+            color: var(--dark-color);
+        }
+
+        .header.scrolled .logo-shine {
+            filter: brightness(1) invert(0);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            background: transparent;
+            /* Remove background from nav */
+            border-radius: 0;
+            /* Remove border radius */
+            margin: 0;
+            /* Remove margin */
+        }
+
+        .logo-shine {
+            height: 50px;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .logo-shine:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Hamburger animation */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 5%;
+            position: relative;
+            z-index: 1;
+            min-height: calc(100vh - 160px);
+            /* Adjust for header and footer */
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: var(--hover-shadow);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            animation: slideUp 0.8s ease forwards;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .brand-section {
+            margin-bottom: 2rem;
+        }
+
+        .brand-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .brand-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Tab Switching */
+        .tab-switch {
+            display: flex;
+            background: var(--light-color);
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            padding: 0.3rem;
+            position: relative;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #666;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tab-btn.active {
+            color: white;
+            background: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(69, 183, 209, 0.4);
+        }
+
+        /* Form Styles */
+        .form-section {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.5s ease;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+        }
+
+        .form-section.active {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 0.95rem;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(69, 183, 209, 0.2);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        .form-input.error {
+            border-color: var(--error-color);
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        .form-input.success {
+            border-color: var(--success-color);
+            background: rgba(39, 174, 96, 0.05);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: var(--accent-color);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-color);
+        }
+
+        .forgot-password {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1rem 2rem;
+            background: var(--gradient-2);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #666;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+        }
+
+        .divider span {
+            margin: 0 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Social Login */
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            background: white;
+            color: #666;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .social-btn.google:hover {
+            border-color: #db4437;
+            color: #db4437;
+        }
+
+        .social-btn.facebook:hover {
+            border-color: #4267B2;
+            color: #4267B2;
+        }
+
+        /* Switch Link */
+        .switch-link {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        .switch-link:hover {
+            color: var(--accent-color);
+        }
+
+        /* Error Messages */
+        .error-message {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--error-color);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--error-color);
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .success-message {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--success-color);
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+            margin-top: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            opacity: 0.7;
+            font-size: 0.85rem;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+                /* Adjust for smaller mobile header */
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                /* Match the reduced header height */
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--gradient);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links ul {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .main-content {
+                padding: 1rem 3%;
+                min-height: calc(100vh - 140px);
+            }
+
+            .login-container {
+                padding: 2rem;
+                margin: 1rem 0;
+            }
+
+            .brand-title {
+                font-size: 2rem;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+
+            .form-options {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .footer {
+                padding: 1.5rem 3%;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+
+            .brand-title {
+                font-size: 1.8rem;
+            }
+
+            .tab-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .form-input {
+                padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+            }
+
+            .input-icon {
+                left: 0.8rem;
+            }
+
+            .toggle-password {
+                right: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav>
+            <a href="index.html">
+                <img src="images/logo web.png" class="logo-shine" alt="HairHub">
+            </a>
+            <div class="nav-links" id="navLinks">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="Salon.html"><i class="fas fa-spa"></i> SALON & SPA</a></li>
+                    <li><a href="Services.html"><i class="fas fa-cut"></i> SERVICES</a></li>
+                    <li><a href="List Your Business.html"><i class="fas fa-store"></i> LIST BUSINESS</a></li>
+                    <li><a href="StyleFinder.html"><i class="fas fa-search"></i> StyleFinder</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> CONTACT</a></li>
+                    <li><a href="Login.html" class="active"><i class="fas fa-user"></i> LOGIN</a></li>
+                </ul>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="login-container">
+            <!-- Brand Section -->
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <i class="fas fa-cut"></i>
+                </div>
+                <h1 class="brand-title">HairHub</h1>
+                <p class="brand-subtitle">Your Beauty Partner</p>
+            </div>
+
+            <!-- Tab Switch -->
+            <div class="tab-switch">
+                <button class="tab-btn active" onclick="showTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <button class="tab-btn" onclick="showTab('register')">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+            </div>
+
+            <div class="form-wrapper" style="position: relative;">
+                <!-- Login Form -->
+                <div id="login-form" class="form-section active">
+                    <div class="error-message" id="login-error"></div>
+                    <div class="success-message" id="login-success"></div>
+
+                    <form id="loginForm" novalidate>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <div class="input-container">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" id="login-email" class="form-input"
+                                    placeholder="Enter your email address" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i> Password
+                            </label>
+                            <div class="input-container">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="login-password" class="form-input"
+                                    placeholder="Enter your password" required>
+                                <i class="fas fa-eye toggle-password"
+                                    onclick="togglePassword('login-password', this)"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="remember-me">
+                                <label for="remember-me">Remember me</label>
+                            </div>
+                            <a href="#" class="forgot-password" onclick="showForgotPassword()">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="loginBtn">
+                            <i class="fas fa-sign-in-alt"></i> Login to HairHub
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+
+                    <div class="social-login">
+                        <a href="#" class="social-btn google" onclick="socialLogin('google')">
+                            <i class="fab fa-google"></i> Google
+                        </a>
+                        <a href="#" class="social-btn facebook" onclick="socialLogin('facebook')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </a>
+                    </div>
+
+                    <p>
+                        <a href="#" class="switch-link" onclick="showTab('register')">
+                            Don't have an account? <strong>Create one here</strong>
+                        </a>
+                    </p>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="form-section">
+                    <div class="error-message" id="register-error"></div>
+                    <div class="success-message" id="register-success"></div>
+
+                    <form id="registerForm" novalidate>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-user"></i> Full Name
+                            </label>
+                            <div class="input-container">
+                                <i class="fas fa-user input-icon"></i>
+                                <input type="text" id="register-name" class="form-input"
+                                    placeholder="Enter your full name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <div class="input-container">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" id="register-email" class="form-input"
+                                    placeholder="Enter your email address" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-phone"></i> Phone Number
+                            </label>
+                            <div class="input-container">
+                                <i class="fas fa-phone input-icon"></i>
+                                <input type="tel" id="register-phone" class="form-input"
+                                    placeholder="Enter your phone number" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i> Password
+                            </label>
+                            <div class="input-container">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="register-password" class="form-input"
+                                    placeholder="Create a strong password" required>
+                                <i class="fas fa-eye toggle-password"
+                                    onclick="togglePassword('register-password', this)"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i> Confirm Password
+                            </label>
+                            <div class="input-container">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="confirm-password" class="form-input"
+                                    placeholder="Confirm your password" required>
+                                <i class="fas fa-eye toggle-password"
+                                    onclick="togglePassword('confirm-password', this)"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-options" style="justify-content: flex-start;">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="terms-agree" required>
+                                <label for="terms-agree">I agree to the <a href="#"
+                                        style="color: var(--accent-color);">Terms & Conditions</a></label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn" id="registerBtn">
+                            <i class="fas fa-user-plus"></i> Create HairHub Account
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span>Or register with</span>
+                    </div>
+
+                    <div class="social-login">
+                        <a href="#" class="social-btn google" onclick="socialLogin('google')">
+                            <i class="fab fa-google"></i> Google
+                        </a>
+                        <a href="#" class="social-btn facebook" onclick="socialLogin('facebook')">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </a>
+                    </div>
+
+                    <p>
+                        <a href="#" class="switch-link" onclick="showTab('login')">
+                            Already have an account? <strong>Login here</strong>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="Services.html">Services</a>
+                <a href="contact.html">Contact</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 HairHub. All rights reserved. Made with <i class="fas fa-heart"
+                        style="color: var(--primary-color);"></i> for beauty enthusiasts.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentTab = 'login';
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            showTab('login');
+            initializeFormValidation();
+            initializeScrollHandler();
+        });
+
+        // Initialize scroll handler for navbar
+        function initializeScrollHandler() {
+            const header = document.getElementById('header');
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.getElementById('hamburger');
+
+            if (navLinks && hamburger) {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            }
+        }
+
+        // Show/Hide tabs
+        function showTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const loginBtn = document.querySelector('.tab-btn:nth-child(1)');
+            const registerBtn = document.querySelector('.tab-btn:nth-child(2)');
+
+            // Clear any error messages
+            clearMessages();
+
+            if (tab === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                loginBtn.classList.add('active');
+                registerBtn.classList.remove('active');
+                currentTab = 'login';
+            } else {
+                loginForm.classList.remove('active');
+                registerForm.classList.add('active');
+                loginBtn.classList.remove('active');
+                registerBtn.classList.add('active');
+                currentTab = 'register';
+            }
+        }
+
+        // Toggle password visibility
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Form validation
+        function initializeFormValidation() {
+            // Login form validation
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    handleLogin();
+                });
+            }
+
+            // Register form validation
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    handleRegister();
+                });
+            }
+
+            // Real-time validation
+            const inputs = document.querySelectorAll('.form-input');
+            inputs.forEach(input => {
+                input.addEventListener('blur', validateInput);
+                input.addEventListener('input', clearInputError);
+            });
+        }
+
+        function validateInput(e) {
+            const input = e.target;
+            const value = input.value.trim();
+            let isValid = true;
+
+            // Remove previous validation classes
+            input.classList.remove('error', 'success');
+
+            // Email validation
+            if (input.type === 'email') {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(value)) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.add('success');
+                }
+            }
+
+            // Password validation
+            if (input.id === 'register-password') {
+                if (value.length < 8) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.add('success');
+                }
+            }
+
+            // Confirm password validation
+            if (input.id === 'confirm-password') {
+                const password = document.getElementById('register-password').value;
+                if (value !== password) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.add('success');
+                }
+            }
+
+            // Phone validation
+            if (input.type === 'tel') {
+                const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+                if (!phoneRegex.test(value.replace(/\s/g, ''))) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.add('success');
+                }
+            }
+
+            // Required field validation
+            if (input.required && !value) {
+                input.classList.add('error');
+                isValid = false;
+            } else if (input.required && value && !input.classList.contains('error')) {
+                input.classList.add('success');
+            }
+
+            return isValid;
+        }
+
+        function clearInputError(e) {
+            e.target.classList.remove('error');
+        }
+
+        // Login handler
+        function handleLogin() {
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const loginBtn = document.getElementById('loginBtn');
+
+            // Clear previous messages
+            clearMessages();
+
+            // Basic validation
+            if (!email || !password) {
+                showError('login-error', 'Please fill in all fields.');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('login-error', 'Please enter a valid email address.');
+                return;
+            }
+
+            // Show loading state
+            showLoading(loginBtn, 'Signing in...');
+
+            // Simulate API call
+            setTimeout(() => {
+                // Here you would make an actual API call
+                // For demo purposes, we'll simulate a successful login
+                hideLoading(loginBtn, '<i class="fas fa-sign-in-alt"></i> Login to HairHub');
+                showSuccess('login-success', 'Login successful! Redirecting to dashboard...');
+
+                // Simulate redirect after success
+                setTimeout(() => {
+                    alert('Welcome to HairHub! Redirecting to your dashboard...');
+                    // window.location.href = 'dashboard.html';
+                }, 1500);
+            }, 2000);
+        }
+
+        // Register handler
+        function handleRegister() {
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const phone = document.getElementById('register-phone').value.trim();
+            const password = document.getElementById('register-password').value.trim();
+            const confirmPassword = document.getElementById('confirm-password').value.trim();
+            const termsAgree = document.getElementById('terms-agree').checked;
+            const registerBtn = document.getElementById('registerBtn');
+
+            // Clear previous messages
+            clearMessages();
+
+            // Validation
+            if (!name || !email || !phone || !password || !confirmPassword) {
+                showError('register-error', 'Please fill in all fields.');
+                return;
+            }
+
+            if (!termsAgree) {
+                showError('register-error', 'Please accept the Terms & Conditions.');
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('register-error', 'Please enter a valid email address.');
+                return;
+            }
+
+            // Password validation
+            if (password.length < 8) {
+                showError('register-error', 'Password must be at least 8 characters long.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showError('register-error', 'Passwords do not match.');
+                return;
+            }
+
+            // Phone validation
+            const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+            if (!phoneRegex.test(phone.replace(/\s/g, ''))) {
+                showError('register-error', 'Please enter a valid phone number.');
+                return;
+            }
+
+            // Show loading state
+            showLoading(registerBtn, 'Creating account...');
+
+            // Simulate API call
+            setTimeout(() => {
+                hideLoading(registerBtn, '<i class="fas fa-user-plus"></i> Create HairHub Account');
+                showSuccess('register-success', 'Account created successfully! Please check your email to verify your account.');
+
+                // Clear form and switch to login after success
+                setTimeout(() => {
+                    document.getElementById('registerForm').reset();
+                    showTab('login');
+                    showSuccess('login-success', 'Account created! Please login with your credentials.');
+                }, 2000);
+            }, 2500);
+        }
+
+        // Social login handler
+        function socialLogin(provider) {
+            alert(`Social login with ${provider.charAt(0).toUpperCase() + provider.slice(1)} would be implemented here.`);
+            // Here you would integrate with actual social login APIs
+        }
+
+        // Forgot password handler
+        function showForgotPassword() {
+            const email = prompt('Enter your email address to reset password:');
+            if (email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (emailRegex.test(email)) {
+                    alert('Password reset instructions have been sent to your email.');
+                } else {
+                    alert('Please enter a valid email address.');
+                }
+            }
+        }
+
+        // Utility functions
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+        }
+
+        function showSuccess(elementId, message) {
+            const successElement = document.getElementById(elementId);
+            if (successElement) {
+                successElement.textContent = message;
+                successElement.classList.add('show');
+            }
+        }
+
+        function clearMessages() {
+            const messages = document.querySelectorAll('.error-message, .success-message');
+            messages.forEach(message => {
+                message.classList.remove('show');
+            });
+        }
+
+        function showLoading(button, text) {
+            button.classList.add('loading');
+            button.innerHTML = `<span class="spinner"></span>${text}`;
+        }
+
+        function hideLoading(button, originalText) {
+            button.classList.remove('loading');
+            button.innerHTML = originalText;
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+
+            if (navLinks && hamburger && !navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Add smooth scrolling to anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

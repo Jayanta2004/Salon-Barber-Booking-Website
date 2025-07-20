@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact HairHub - Get in Touch with Our Beauty Experts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #45b7d1;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            --gradient-3: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --hover-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --warning-color: #f39c12;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            overflow-x: hidden;
+            padding-top: 80px;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(78, 205, 196, 0.2) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
+            50% { opacity: 0.8; transform: scale(1.1) rotate(2deg); }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header.scrolled nav a {
+            color: var(--dark-color);
+        }
+
+        .header.scrolled .logo-shine {
+            filter: brightness(1) invert(0);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+        }
+
+        .logo-shine {
+            height: 50px;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .logo-shine:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient);
+            padding: 4rem 5% 2rem;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: slideUp 1s ease forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideUp 1s ease 0.3s forwards;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 150px;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Contact Methods Section */
+        .contact-methods {
+            padding: 4rem 5%;
+            background: white;
+        }
+
+        .methods-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 3rem;
+        }
+
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .method-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .method-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .method-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .method-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .method-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .method-info p {
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .method-info a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .method-info a:hover {
+            color: var(--primary-color);
+        }
+
+        .method-availability {
+            background: var(--light-color);
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+
+        /* Contact Form Section */
+        .contact-form-section {
+            padding: 4rem 5%;
+            background: var(--light-color);
+        }
+
+        .form-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .form-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .info-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .info-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--light-color);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .info-item:hover {
+            background: rgba(69, 183, 209, 0.1);
+            transform: translateX(5px);
+        }
+
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--dark-color);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 15px rgba(69, 183, 209, 0.2);
+            outline: none;
+            transform: translateY(-2px);
+        }
+
+        .form-input.error, .form-select.error, .form-textarea.error {
+            border-color: var(--error-color);
+            background: rgba(231, 76, 60, 0.05);
+        }
+
+        .form-input.success, .form-select.success, .form-textarea.success {
+            border-color: var(--success-color);
+            background: rgba(39, 174, 96, 0.05);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-message {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--success-color);
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        .form-submit {
+            background: var(--gradient-2);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-submit::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .form-submit:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .form-submit.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 5%;
+            background: white;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: white;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            color: var(--dark-color);
+        }
+
+        .faq-question:hover {
+            background: var(--light-color);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .faq-answer.active {
+            max-height: 200px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+            color: var(--accent-color);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Business Hours Section */
+        .hours-section {
+            padding: 4rem 5%;
+            background: var(--gradient-3);
+            color: white;
+            text-align: center;
+        }
+
+        .hours-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .hours-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .hours-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .hours-list {
+            list-style: none;
+        }
+
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hours-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Social Media Section */
+        .social-section {
+            padding: 3rem 5%;
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+        }
+
+        .social-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .social-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .social-subtitle {
+            margin-bottom: 2rem;
+            opacity: 0.8;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            width: 80px;
+            height: 80px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        .social-link.facebook:hover { background: #3b5998; }
+        .social-link.instagram:hover { background: #e4405f; }
+        .social-link.twitter:hover { background: #1da1f2; }
+        .social-link.youtube:hover { background: #ff0000; }
+        .social-link.linkedin:hover { background: #0077b5; }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .footer-section p {
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.8s ease-in-out infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--gradient);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: right 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links ul {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .methods-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hours-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+
+            .social-link {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .hero-section,
+            .contact-methods,
+            .contact-form-section,
+            .faq-section,
+            .hours-section,
+            .social-section {
+                padding: 3rem 3%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .method-card,
+            .form-info,
+            .contact-form {
+                padding: 2rem;
+            }
+
+            .social-link {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .header,
+            .social-section,
+            .footer {
+                display: none;
+            }
+            
+            body {
+                padding-top: 0;
+                background: white;
+            }
+            
+            .contact-methods,
+            .contact-form-section {
+                background: white;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav>
+            <a href="index.html">
+                <img src="images/logo web.png" class="logo-shine" alt="HairHub">
+            </a>
+            <div class="nav-links" id="navLinks">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="Salon.html"><i class="fas fa-spa"></i> SALON & SPA</a></li>
+                    <li><a href="Services.html"><i class="fas fa-cut"></i> SERVICES</a></li>
+                    <li><a href="List Your Business.html"><i class="fas fa-store"></i> LIST BUSINESS</a></li>
+                    <li><a href="StyleFinder.html"><i class="fas fa-search"></i> StyleFinder</a></li>
+                    <li><a href="contact.html" class="active"><i class="fas fa-envelope"></i> CONTACT</a></li>
+                    <li><a href="Login.html"><i class="fas fa-user"></i> LOGIN</a></li>
+                </ul>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Get In Touch</h1>
+            <p class="hero-subtitle">
+                We're here to help you discover your perfect look and connect you with the best beauty professionals. 
+                Reach out to us anytime - we'd love to hear from you!
+            </p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-label">24/7 Support</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-reply"></i>
+                    </div>
+                    <div class="stat-label">Quick Response</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-label">Expert Team</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Methods -->
+    <section class="contact-methods">
+        <div class="methods-container">
+            <h2 class="section-title">Multiple Ways to Reach Us</h2>
+            <p class="section-subtitle">
+                Choose the contact method that works best for you. Our team is ready to assist with bookings, 
+                questions, or support.
+            </p>
+            
+            <div class="methods-grid">
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3 class="method-title">Call Us</h3>
+                    <div class="method-info">
+                        <p><strong>Customer Service:</strong></p>
+                        <p><a href="tel:+919876543210">+91 98765 43210</a></p>
+                        <p><strong>Business Inquiries:</strong></p>
+                        <p><a href="tel:+919876543211">+91 98765 43211</a></p>
+                    </div>
+                    <div class="method-availability">
+                        <strong>Available:</strong> Mon-Sun, 9:00 AM - 9:00 PM
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3 class="method-title">Email Us</h3>
+                    <div class="method-info">
+                        <p><strong>General Support:</strong></p>
+                        <p><a href="mailto:support@hairhub.com">support@hairhub.com</a></p>
+                        <p><strong>Business Partnerships:</strong></p>
+                        <p><a href="mailto:business@hairhub.com">business@hairhub.com</a></p>
+                    </div>
+                    <div class="method-availability">
+                        <strong>Response Time:</strong> Within 24 hours
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="method-title">Visit Us</h3>
+                    <div class="method-info">
+                        <p><strong>Head Office:</strong></p>
+                        <p>123 Beauty Street, Connaught Place</p>
+                        <p>New Delhi, India - 110001</p>
+                        <p><a href="https://goo.gl/maps" target="_blank">Get Directions</a></p>
+                    </div>
+                    <div class="method-availability">
+                        <strong>Office Hours:</strong> Mon-Fri, 10:00 AM - 6:00 PM
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="method-title">Live Chat</h3>
+                    <div class="method-info">
+                        <p><strong>Instant Support:</strong></p>
+                        <p>Chat with our beauty experts</p>
+                        <p>Get quick answers to your questions</p>
+                        <p><a href="#" onclick="openLiveChat()">Start Live Chat</a></p>
+                    </div>
+                    <div class="method-availability">
+                        <strong>Available:</strong> Mon-Sun, 8:00 AM - 10:00 PM
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3 class="method-title">WhatsApp</h3>
+                    <div class="method-info">
+                        <p><strong>Quick Support:</strong></p>
+                        <p><a href="https://wa.me/919876543210" target="_blank">+91 98765 43210</a></p>
+                        <p>Send us a message anytime</p>
+                        <p>Get instant booking assistance</p>
+                    </div>
+                    <div class="method-availability">
+                        <strong>Response Time:</strong> Usually within 5 minutes
+                    </div>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3 class="method-title">Help Center</h3>
+                    <div class="method-info">
+                        <p><strong>Self-Service:</strong></p>
+                        <p>Browse our comprehensive FAQ</p>
+                        <p>Find step-by-step guides</p>
+                        <p><a href="#faq">View FAQ Section</a></p>
+                    </div>
+                    <div class="method-availability">
+                        <strong>Available:</strong> 24/7 Self-Service
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="contact-form-section">
+        <div class="form-container">
+            <div class="form-info">
+                <h3 class="info-title">Why Contact HairHub?</h3>
+                <ul class="info-list">
+                    <li class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <strong>Easy Booking</strong>
+                            <p>Schedule appointments with top-rated salons</p>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div>
+                            <strong>AI Style Finder</strong>
+                            <p>Get personalized beauty recommendations</p>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div>
+                            <strong>Expert Advice</strong>
+                            <p>Connect with professional beauty experts</p>
+                        </div>
+                    </li>
+                    <li class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <strong>Trusted Platform</strong>
+                            <p>Safe and secure beauty service booking</p>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <h4 style="margin-bottom: 1rem; color: var(--dark-color);">Quick Contact</h4>
+                    <p style="margin-bottom: 0.5rem;"><i class="fas fa-phone" style="color: var(--accent-color); margin-right: 0.5rem;"></i> +91 98765 43210</p>
+                    <p style="margin-bottom: 0.5rem;"><i class="fas fa-envelope" style="color: var(--accent-color); margin-right: 0.5rem;"></i> support@hairhub.com</p>
+                    <p><i class="fas fa-map-marker-alt" style="color: var(--accent-color); margin-right: 0.5rem;"></i> New Delhi, India</p>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3 class="form-title">Send Us a Message</h3>
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    Thank you for your message! We'll get back to you within 24 hours.
+                </div>
+                
+                <form id="contactForm" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName" class="form-label">
+                                <i class="fas fa-user"></i> First Name *
+                            </label>
+                            <input type="text" id="firstName" name="firstName" class="form-input" required placeholder="Your first name">
+                            <div class="error-message" id="firstNameError">Please enter your first name</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName" class="form-label">
+                                <i class="fas fa-user"></i> Last Name *
+                            </label>
+                            <input type="text" id="lastName" name="lastName" class="form-input" required placeholder="Your last name">
+                            <div class="error-message" id="lastNameError">Please enter your last name</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope"></i> Email Address *
+                            </label>
+                            <input type="email" id="email" name="email" class="form-input" required placeholder="your@email.com">
+                            <div class="error-message" id="emailError">Please enter a valid email address</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone" class="form-label">
+                                <i class="fas fa-phone"></i> Phone Number
+                            </label>
+                            <input type="tel" id="phone" name="phone" class="form-input" placeholder="+91 98765 43210">
+                            <div class="error-message" id="phoneError">Please enter a valid phone number</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="subject" class="form-label">
+                                <i class="fas fa-tag"></i> Subject *
+                            </label>
+                            <select id="subject" name="subject" class="form-select" required>
+                                <option value="">Select a subject</option>
+                                <option value="general">General Inquiry</option>
+                                <option value="booking">Booking Assistance</option>
+                                <option value="technical">Technical Support</option>
+                                <option value="business">Business Partnership</option>
+                                <option value="feedback">Feedback & Suggestions</option>
+                                <option value="complaint">Complaint</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <div class="error-message" id="subjectError">Please select a subject</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority" class="form-label">
+                                <i class="fas fa-exclamation-circle"></i> Priority
+                            </label>
+                            <select id="priority" name="priority" class="form-select">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message" class="form-label">
+                            <i class="fas fa-comment"></i> Message *
+                        </label>
+                        <textarea id="message" name="message" class="form-textarea" required placeholder="Tell us how we can help you..."></textarea>
+                        <div class="error-message" id="messageError">Please enter your message</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <span>Subscribe to our newsletter for beauty tips and exclusive offers</span>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="display: flex; align-items: flex-start; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="privacy" name="privacy" required style="margin-top: 0.2rem;">
+                            <span>I agree to the <a href="#" style="color: var(--accent-color);">Privacy Policy</a> and consent to the processing of my personal data *</span>
+                        </label>
+                        <div class="error-message" id="privacyError">Please accept the privacy policy</div>
+                    </div>
+
+                    <button type="submit" class="form-submit" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i>
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="faq-container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-subtitle">
+                Find quick answers to the most common questions about our services
+            </p>
+            
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How do I book an appointment through HairHub?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Booking is simple! Browse our salon listings, select your preferred salon, choose your services and time slot, then confirm your booking. You'll receive instant confirmation via email and SMS.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How does the AI StyleFinder work?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Our AI analyzes your facial features, skin tone, and preferences using advanced computer vision. Simply upload your photo, and our algorithm will recommend personalized hairstyles and beauty treatments with 98.5% accuracy.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Can I cancel or reschedule my appointment?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, you can cancel or reschedule up to 24 hours before your appointment without any charges. For same-day changes, please contact the salon directly or our support team.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>Are all salons on HairHub verified?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Absolutely! We verify all our partner salons through a rigorous screening process including license verification, quality checks, and customer reviews. Only top-rated professionals join our platform.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>What payment methods do you accept?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>We accept all major payment methods including credit/debit cards, UPI, net banking, and digital wallets. All transactions are secured with bank-level encryption.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">
+                    <span>How can I list my salon on HairHub?</span>
+                    <i class="fas fa-chevron-down faq-icon"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Visit our "List Your Business" page to start the registration process. Fill out the application form, upload required documents, and our team will verify and approve your salon within 24-48 hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Hours -->
+    <section class="hours-section">
+        <div class="hours-container">
+            <h2 class="section-title" style="color: white; margin-bottom: 1rem;">Business Hours</h2>
+            <p style="margin-bottom: 2rem; opacity: 0.9;">We're here when you need us most</p>
+            
+            <div class="hours-grid">
+                <div class="hours-card">
+                    <h3 class="hours-title">
+                        <i class="fas fa-headset"></i>
+                        Customer Support
+                    </h3>
+                    <ul class="hours-list">
+                        <li><span>Monday - Friday</span><span>9:00 AM - 9:00 PM</span></li>
+                        <li><span>Saturday</span><span>10:00 AM - 8:00 PM</span></li>
+                        <li><span>Sunday</span><span>10:00 AM - 6:00 PM</span></li>
+                        <li><span>Emergency Support</span><span>24/7 Available</span></li>
+                    </ul>
+                </div>
+                
+                <div class="hours-card">
+                    <h3 class="hours-title">
+                        <i class="fas fa-building"></i>
+                        Office Hours
+                    </h3>
+                    <ul class="hours-list">
+                        <li><span>Monday - Friday</span><span>10:00 AM - 6:00 PM</span></li>
+                        <li><span>Saturday</span><span>10:00 AM - 4:00 PM</span></li>
+                        <li><span>Sunday</span><span>Closed</span></li>
+                        <li><span>Lunch Break</span><span>1:00 PM - 2:00 PM</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media -->
+    <section class="social-section">
+        <div class="social-container">
+            <h2 class="social-title">Follow Us on Social Media</h2>
+            <p class="social-subtitle">
+                Stay connected and get the latest beauty trends, tips, and exclusive offers
+            </p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-link instagram" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="social-link twitter" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-link youtube" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="#" class="social-link linkedin" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Company Info -->
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="images/logo web.png" alt="HairHub" style="height: 40px; filter: brightness(0) invert(1); margin-bottom: 1rem;">
+                </div>
+                <p>HairHub connects you with the best beauty professionals and offers AI-powered style recommendations to help you discover your perfect look.</p>
+                <div class="social-links" style="margin-top: 1rem;">
+                    <a href="#" class="social-link" aria-label="Facebook" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn" style="width: 40px; height: 40px; font-size: 1.2rem;">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="footer-section">
+                <h3><i class="fas fa-phone"></i> Contact Information</h3>
+                <ul class="footer-links">
+                    <li><a href="tel:+919876543210"><i class="fas fa-phone"></i> +91 98765 43210</a></li>
+                    <li><a href="mailto:support@hairhub.com"><i class="fas fa-envelope"></i> support@hairhub.com</a></li>
+                    <li><a href="mailto:business@hairhub.com"><i class="fas fa-briefcase"></i> business@hairhub.com</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> New Delhi, India</a></li>
+                    <li><a href="#"><i class="fas fa-clock"></i> Mon-Sun: 9 AM - 9 PM</a></li>
+                    <li><a href="https://wa.me/919876543210"><i class="fab fa-whatsapp"></i> WhatsApp Support</a></li>
+                </ul>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h3><i class="fas fa-link"></i> Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="Salon.html"><i class="fas fa-spa"></i> Find Salons</a></li>
+                    <li><a href="Services.html"><i class="fas fa-cut"></i> Services</a></li>
+                    <li><a href="StyleFinder.html"><i class="fas fa-magic"></i> AI StyleFinder</a></li>
+                    <li><a href="List Your Business.html"><i class="fas fa-store"></i> List Your Business</a></li>
+                    <li><a href="Login.html"><i class="fas fa-user"></i> Login</a></li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="footer-section">
+                <h3><i class="fas fa-headset"></i> Customer Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#faq"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="#"><i class="fas fa-comments"></i> Live Chat</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> Help Center</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                    <li><a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                    <li><a href="#"><i class="fas fa-star"></i> Reviews & Feedback</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 HairHub. All rights reserved. Made with <i class="fas fa-heart" style="color: var(--primary-color);"></i> for beauty enthusiasts worldwide.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        const form = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeScrollHandler();
+            initializeFormValidation();
+            initializeAnimations();
+        });
+
+        // Initialize scroll handler for navbar
+        function initializeScrollHandler() {
+            const header = document.getElementById('header');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.getElementById('hamburger');
+            
+            if (navLinks && hamburger) {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            }
+        }
+
+        // Initialize form validation
+        function initializeFormValidation() {
+            if (!form) return;
+
+            // Add event listeners for real-time validation
+            const inputs = form.querySelectorAll('.form-input, .form-select, .form-textarea');
+            inputs.forEach(input => {
+                input.addEventListener('blur', () => validateField(input));
+                input.addEventListener('input', () => clearFieldError(input));
+            });
+
+            // Form submission
+            form.addEventListener('submit', handleFormSubmission);
+        }
+
+        // Validate individual field
+        function validateField(field) {
+            const value = field.value.trim();
+            const fieldName = field.name;
+            let isValid = true;
+            let errorMessage = '';
+
+            // Clear previous states
+            field.classList.remove('error', 'success');
+            hideFieldError(fieldName);
+
+            // Validation rules
+            switch(fieldName) {
+                case 'firstName':
+                case 'lastName':
+                    if (!value) {
+                        errorMessage = `Please enter your ${fieldName === 'firstName' ? 'first' : 'last'} name`;
+                        isValid = false;
+                    } else if (value.length < 2) {
+                        errorMessage = 'Name must be at least 2 characters long';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'email':
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!value) {
+                        errorMessage = 'Please enter your email address';
+                        isValid = false;
+                    } else if (!emailRegex.test(value)) {
+                        errorMessage = 'Please enter a valid email address';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'phone':
+                    if (value) {
+                        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+                        if (!phoneRegex.test(value.replace(/\s/g, ''))) {
+                            errorMessage = 'Please enter a valid phone number';
+                            isValid = false;
+                        }
+                    }
+                    break;
+
+                case 'subject':
+                    if (!value) {
+                        errorMessage = 'Please select a subject';
+                        isValid = false;
+                    }
+                    break;
+
+                case 'message':
+                    if (!value) {
+                        errorMessage = 'Please enter your message';
+                        isValid = false;
+                    } else if (value.length < 10) {
+                        errorMessage = 'Message must be at least 10 characters long';
+                        isValid = false;
+                    }
+                    break;
+            }
+
+            // Show validation result
+            if (!isValid) {
+                field.classList.add('error');
+                showFieldError(fieldName, errorMessage);
+            } else if (field.required || value) {
+                field.classList.add('success');
+            }
+
+            return isValid;
+        }
+
+        // Clear field error
+        function clearFieldError(field) {
+            field.classList.remove('error');
+            hideFieldError(field.name);
+        }
+
+        // Show field error
+        function showFieldError(fieldName, message) {
+            const errorElement = document.getElementById(`${fieldName}Error`);
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.add('show');
+            }
+        }
+
+        // Hide field error
+        function hideFieldError(fieldName) {
+            const errorElement = document.getElementById(`${fieldName}Error`);
+            if (errorElement) {
+                errorElement.classList.remove('show');
+            }
+        }
+
+        // Handle form submission
+        function handleFormSubmission(e) {
+            e.preventDefault();
+
+            // Validate all fields
+            const requiredFields = ['firstName', 'lastName', 'email', 'subject', 'message'];
+            let isFormValid = true;
+
+            requiredFields.forEach(fieldName => {
+                const field = document.getElementById(fieldName);
+                if (field && !validateField(field)) {
+                    isFormValid = false;
+                }
+            });
+
+            // Check privacy policy
+            const privacyCheckbox = document.getElementById('privacy');
+            if (privacyCheckbox && !privacyCheckbox.checked) {
+                showFieldError('privacy', 'Please accept the privacy policy');
+                isFormValid = false;
+            }
+
+            if (!isFormValid) {
+                return;
+            }
+
+            // Show loading state
+            showLoadingState();
+
+            // Simulate form submission (replace with actual API call)
+            setTimeout(() => {
+                hideLoadingState();
+                showSuccessMessage();
+                resetForm();
+            }, 2000);
+        }
+
+        // Show loading state
+        function showLoadingState() {
+            submitBtn.classList.add('loading');
+            submitBtn.innerHTML = '<span class="spinner"></span>Sending Message...';
+            submitBtn.disabled = true;
+        }
+
+        // Hide loading state
+        function hideLoadingState() {
+            submitBtn.classList.remove('loading');
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            submitBtn.disabled = false;
+        }
+
+        // Show success message
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.classList.add('show');
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        // Reset form
+        function resetForm() {
+            if (form) {
+                form.reset();
+                
+                // Clear all validation states
+                const inputs = form.querySelectorAll('.form-input, .form-select, .form-textarea');
+                inputs.forEach(input => {
+                    input.classList.remove('error', 'success');
+                });
+                
+                // Hide all error messages
+                const errorMessages = form.querySelectorAll('.error-message');
+                errorMessages.forEach(error => {
+                    error.classList.remove('show');
+                });
+            }
+        }
+
+        // Toggle FAQ items
+        function toggleFaq(button) {
+            const faqItem = button.parentElement;
+            const answer = faqItem.querySelector('.faq-answer');
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-answer').classList.remove('active');
+            });
+            
+            // Open clicked item if it wasn't already active
+            if (!isActive) {
+                faqItem.classList.add('active');
+                answer.classList.add('active');
+            }
+        }
+
+        // Open live chat (placeholder function)
+        function openLiveChat() {
+            alert('Live chat would be integrated here with a real chat service like Intercom, Zendesk, or Tawk.to');
+            // In a real implementation, you would integrate with a live chat service
+        }
+
+        // Initialize scroll animations
+        function initializeAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for scroll animations
+            const animateElements = document.querySelectorAll('.method-card, .faq-item, .info-item');
+            animateElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(el);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+            
+            if (navLinks && hamburger && !navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Add keyboard navigation for accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Close mobile menu on escape
+                const navLinks = document.getElementById('navLinks');
+                const hamburger = document.getElementById('hamburger');
+                if (navLinks && hamburger) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            }
+        });
+
+        // Initialize tooltips for form validation
+        document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(input => {
+            input.addEventListener('invalid', function(e) {
+                e.preventDefault();
+                validateField(this);
+            });
+        });
+    </script>
+</body>
+</html>

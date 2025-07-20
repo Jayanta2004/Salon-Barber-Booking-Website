@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI StyleFinder - Discover Your Perfect Look | HairHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --accent-color: #45b7d1;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+            --gradient-3: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            --gradient-4: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --gradient-5: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --hover-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --warning-color: #f39c12;
+            --ai-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            overflow-x: hidden;
+            background: var(--gradient);
+            position: relative;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(78, 205, 196, 0.2) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundShift {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1) rotate(2deg);
+            }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+        }
+
+        .logo-shine {
+            height: 50px;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 5% 50px;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            }
+
+            to {
+                box-shadow: 0 0 40px rgba(255, 255, 255, 0.6);
+            }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, #a8edea 50%, #fed6e3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: slideUp 1s ease forwards;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideUp 1s ease 0.3s forwards;
+            line-height: 1.4;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            min-width: 150px;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-section {
+            margin-top: 3rem;
+            animation: slideUp 1s ease 0.6s forwards;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--gradient-2);
+            color: white;
+            padding: 1.2rem 3rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.4);
+        }
+
+        /* AI Style Finder Section */
+        .style-finder-section {
+            padding: 5rem 5%;
+            background: white;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: var(--ai-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .style-finder-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        /* Photo Upload Section */
+        .upload-section {
+            background: var(--gradient-4);
+            padding: 3rem;
+            border-radius: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px dashed var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .upload-section:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .upload-icon {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .upload-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .upload-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .upload-button {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .upload-button:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(69, 183, 209, 0.4);
+        }
+
+        /* AI Analysis Panel */
+        .analysis-panel {
+            background: white;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .analysis-header {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .analysis-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .analysis-content {
+            padding: 2rem;
+        }
+
+        .analysis-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .analysis-step {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-color);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .analysis-step:hover {
+            background: rgba(69, 183, 209, 0.1);
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .step-content h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--dark-color);
+        }
+
+        .step-content p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 5rem 5%;
+            background: var(--gradient-4);
+        }
+
+        .features-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-2);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-3);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Interactive Demo */
+        .demo-section {
+            padding: 5rem 5%;
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .demo-interface {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
+            padding: 3rem;
+            margin-top: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .demo-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .control-group {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: left;
+        }
+
+        .control-label {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .control-option {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .control-option:hover,
+        .control-option.active {
+            background: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .demo-result {
+            background: white;
+            color: var(--dark-color);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .result-card {
+            background: var(--light-color);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .result-image {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient-5);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .result-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .result-score {
+            background: var(--success-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            display: inline-block;
+        }
+
+        /* Statistics Section */
+        .stats-section {
+            padding: 5rem 5%;
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .final-cta-section {
+            padding: 5rem 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--gradient-2);
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-color);
+            border: 2px solid var(--accent-color);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            background: var(--primary-color);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--gradient);
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                padding-top: 2rem;
+                transition: right 0.3s ease;
+            }
+
+            .nav-links ul {
+                flex-direction: column;
+                gap: 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .style-finder-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-controls {
+                grid-template-columns: 1fr;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .hero-section,
+            .style-finder-section,
+            .features-section,
+            .demo-section,
+            .stats-section,
+            .final-cta-section {
+                padding: 3rem 3%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .upload-section {
+                padding: 2rem;
+            }
+
+            .analysis-panel {
+                margin-top: 2rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* AI Processing Animation */
+        .ai-processing {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: var(--gradient-4);
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .processing-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        .processing-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+
+        .processing-steps {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav>
+            <a href="index.html">
+                <img src="images/logo web.png" class="logo-shine" alt="HairHub">
+            </a>
+            <div class="nav-links" id="navLinks">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="Salon.html"><i class="fas fa-spa"></i> SALON & SPA</a></li>
+                    <li><a href="Services.html"><i class="fas fa-cut"></i> SERVICES</a></li>
+                    <li><a href="List Your Business.html"><i class="fas fa-store"></i> LIST BUSINESS</a></li>
+                    <li><a href="StyleFinder.html" class="active"><i class="fas fa-search"></i> StyleFinder</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> CONTACT</a></li>
+                    <li><a href="Login.html"><i class="fas fa-user"></i> LOGIN</a></li>
+                </ul>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <div class="ai-badge">
+                <i class="fas fa-brain"></i>
+                <span>Powered by Advanced AI</span>
+            </div>
+            <h1 class="hero-title">AI StyleFinder</h1>
+            <p class="hero-subtitle">
+                Discover your perfect look with our revolutionary AI-powered style analysis.
+                Upload your photo and let our advanced algorithms recommend personalized
+                hairstyles, colors, and beauty treatments just for you.
+            </p>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">98.5%</span>
+                    <span class="stat-label">Accuracy Rate</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">500K+</span>
+                    <span class="stat-label">Styles Analyzed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <a href="#style-finder" class="cta-button">
+                    <i class="fas fa-magic"></i>
+                    Try AI StyleFinder Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Style Finder Section -->
+    <section class="style-finder-section" id="style-finder">
+        <h2 class="section-title">AI-Powered Style Analysis</h2>
+        <p class="section-subtitle">
+            Our cutting-edge artificial intelligence analyzes your facial features, skin tone,
+            and personal preferences to recommend the perfect hairstyles and beauty treatments.
+        </p>
+
+        <div class="style-finder-container">
+            <div class="upload-section" id="uploadSection">
+                <div class="upload-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h3 class="upload-title">Upload Your Photo</h3>
+                <p class="upload-subtitle">
+                    Take or upload a clear photo of yourself for the most accurate AI analysis.
+                    Our system works best with front-facing photos in good lighting.
+                </p>
+                <button class="upload-button" onclick="uploadPhoto()">
+                    <i class="fas fa-upload"></i> Choose Photo
+                </button>
+                <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+
+                <div class="ai-processing" id="aiProcessing">
+                    <div class="processing-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="processing-text">AI Analyzing Your Photo...</div>
+                    <div class="processing-steps" id="processingSteps">
+                        Detecting facial features...
+                    </div>
+                </div>
+            </div>
+
+            <div class="analysis-panel">
+                <div class="analysis-header">
+                    <h3 class="analysis-title">AI Analysis Process</h3>
+                    <p>See how our advanced AI works its magic</p>
+                </div>
+                <div class="analysis-content">
+                    <div class="analysis-steps">
+                        <div class="analysis-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Face Detection & Mapping</h4>
+                                <p>AI identifies key facial landmarks and proportions</p>
+                            </div>
+                        </div>
+                        <div class="analysis-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Skin Tone Analysis</h4>
+                                <p>Advanced color analysis determines your undertones</p>
+                            </div>
+                        </div>
+                        <div class="analysis-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Feature Assessment</h4>
+                                <p>Analyzes face shape, eye color, and bone structure</p>
+                            </div>
+                        </div>
+                        <div class="analysis-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Style Matching</h4>
+                                <p>Matches you with optimal hairstyles and treatments</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2 class="section-title">Revolutionary AI Features</h2>
+        <p class="section-subtitle">
+            Experience the future of beauty discovery with our state-of-the-art artificial intelligence technology
+        </p>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3 class="feature-title">Facial Recognition AI</h3>
+                <p class="feature-description">
+                    Advanced computer vision technology analyzes over 100 facial points to understand
+                    your unique features and recommend styles that enhance your natural beauty.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="feature-title">Color Analysis Engine</h3>
+                <p class="feature-description">
+                    Sophisticated color matching algorithms determine your skin undertones and
+                    recommend hair colors that perfectly complement your natural coloring.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3 class="feature-title">Virtual Try-On</h3>
+                <p class="feature-description">
+                    See how different hairstyles and colors look on you with our realistic
+                    AR-powered virtual try-on technology before making any commitments.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">Trend Analysis</h3>
+                <p class="feature-description">
+                    Stay ahead of beauty trends with AI that analyzes global style patterns
+                    and recommends trending looks that suit your personal style.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <h3 class="feature-title">Personalization AI</h3>
+                <p class="feature-description">
+                    Machine learning algorithms remember your preferences and continuously
+                    improve recommendations based on your feedback and style choices.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3 class="feature-title">Real-Time Processing</h3>
+                <p class="feature-description">
+                    Lightning-fast AI processing delivers instant results, allowing you to
+                    experiment with different styles and get recommendations in seconds.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section class="demo-section">
+        <div class="demo-container">
+            <h2 class="section-title" style="color: white;">Try Our AI Demo</h2>
+            <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">
+                Experience the power of our AI StyleFinder with this interactive demonstration
+            </p>
+
+            <div class="demo-interface">
+                <div class="demo-controls">
+                    <div class="control-group">
+                        <div class="control-label">
+                            <i class="fas fa-user"></i> Face Shape
+                        </div>
+                        <div class="control-options">
+                            <button class="control-option active"
+                                onclick="updateDemo('faceShape', 'oval')">Oval</button>
+                            <button class="control-option" onclick="updateDemo('faceShape', 'round')">Round</button>
+                            <button class="control-option" onclick="updateDemo('faceShape', 'square')">Square</button>
+                            <button class="control-option" onclick="updateDemo('faceShape', 'heart')">Heart</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <i class="fas fa-tint"></i> Hair Type
+                        </div>
+                        <div class="control-options">
+                            <button class="control-option active"
+                                onclick="updateDemo('hairType', 'straight')">Straight</button>
+                            <button class="control-option" onclick="updateDemo('hairType', 'wavy')">Wavy</button>
+                            <button class="control-option" onclick="updateDemo('hairType', 'curly')">Curly</button>
+                            <button class="control-option" onclick="updateDemo('hairType', 'coily')">Coily</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <i class="fas fa-sun"></i> Skin Tone
+                        </div>
+                        <div class="control-options">
+                            <button class="control-option active" onclick="updateDemo('skinTone', 'fair')">Fair</button>
+                            <button class="control-option" onclick="updateDemo('skinTone', 'medium')">Medium</button>
+                            <button class="control-option" onclick="updateDemo('skinTone', 'olive')">Olive</button>
+                            <button class="control-option" onclick="updateDemo('skinTone', 'deep')">Deep</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="control-label">
+                            <i class="fas fa-star"></i> Style Preference
+                        </div>
+                        <div class="control-options">
+                            <button class="control-option active"
+                                onclick="updateDemo('style', 'classic')">Classic</button>
+                            <button class="control-option" onclick="updateDemo('style', 'trendy')">Trendy</button>
+                            <button class="control-option" onclick="updateDemo('style', 'edgy')">Edgy</button>
+                            <button class="control-option" onclick="updateDemo('style', 'natural')">Natural</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-result">
+                    <h3 style="text-align: center; margin-bottom: 2rem; color: var(--dark-color);">
+                        AI Recommendations
+                    </h3>
+                    <div class="result-grid" id="resultGrid">
+                        <div class="result-card">
+                            <div class="result-image">
+                                <i class="fas fa-cut"></i>
+                            </div>
+                            <div class="result-title">Layered Bob</div>
+                            <div class="result-score">95% Match</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-image">
+                                <i class="fas fa-palette"></i>
+                            </div>
+                            <div class="result-title">Warm Chocolate</div>
+                            <div class="result-score">92% Match</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-image">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <div class="result-title">Beach Waves</div>
+                            <div class="result-score">89% Match</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section">
+        <h2 class="section-title" style="color: white;">Proven Results</h2>
+        <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">
+            Our AI technology delivers exceptional accuracy and customer satisfaction
+        </p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="stat-value">98.5%</div>
+                <div class="stat-label">AI Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-value">500K+</div>
+                <div class="stat-label">Users Served</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-value">4.9/5</div>
+                <div class="stat-label">User Rating</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-value">
+                    < 3s</div>
+                        <div class="stat-label">Analysis Time</div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="final-cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Ready to Discover Your Perfect Style?</h2>
+            <p class="cta-subtitle">
+                Join thousands of satisfied customers who have found their ideal look with our AI-powered StyleFinder.
+                Start your beauty transformation today!
+            </p>
+            <div class="cta-buttons">
+                <a href="#style-finder" class="btn-primary">
+                    <i class="fas fa-magic"></i> Start AI Analysis
+                </a>
+                <a href="Salon.html" class="btn-secondary">
+                    <i class="fas fa-store"></i> Find Salons
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Company Info -->
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="images/logo web.png" alt="HairHub"
+                        style="height: 40px; filter: brightness(0) invert(1); margin-bottom: 1rem;">
+                </div>
+                <p>HairHub's AI StyleFinder revolutionizes beauty discovery with cutting-edge artificial intelligence,
+                    helping you find your perfect look with unprecedented accuracy.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- AI Technology -->
+            <div class="footer-section">
+                <h3><i class="fas fa-brain"></i> AI Technology</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-eye"></i> Facial Recognition</a></li>
+                    <li><a href="#"><i class="fas fa-palette"></i> Color Analysis</a></li>
+                    <li><a href="#"><i class="fas fa-magic"></i> Virtual Try-On</a></li>
+                    <li><a href="#"><i class="fas fa-chart-line"></i> Trend Analysis</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Machine Learning</a></li>
+                    <li><a href="#"><i class="fas fa-mobile-alt"></i> Real-Time Processing</a></li>
+                </ul>
+            </div>
+
+            <!-- Services -->
+            <div class="footer-section">
+                <h3><i class="fas fa-cut"></i> Beauty Services</h3>
+                <ul class="footer-links">
+                    <li><a href="Salon.html"><i class="fas fa-spa"></i> Premium Salons</a></li>
+                    <li><a href="Services.html"><i class="fas fa-scissors"></i> Hair Styling</a></li>
+                    <li><a href="Services.html"><i class="fas fa-tint"></i> Hair Coloring</a></li>
+                    <li><a href="Services.html"><i class="fas fa-hands"></i> Treatments</a></li>
+                    <li><a href="List Your Business.html"><i class="fas fa-store"></i> Partner Salons</a></li>
+                    <li><a href="#"><i class="fas fa-calendar"></i> Book Appointment</a></li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="footer-section">
+                <h3><i class="fas fa-headset"></i> Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-question-circle"></i> How AI Works</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Privacy & AI</a></li>
+                    <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact Support</a></li>
+                    <li><a href="#"><i class="fas fa-book"></i> AI Guidelines</a></li>
+                    <li><a href="#"><i class="fas fa-download"></i> Mobile App</a></li>
+                    <li><a href="#"><i class="fas fa-graduation-cap"></i> AI Training</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 HairHub AI StyleFinder. All rights reserved. Powered by advanced artificial intelligence.
+                Made with <i class="fas fa-heart" style="color: var(--primary-color);"></i> for beauty innovation.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div style="text-align: center;">
+            <div class="loading-spinner"></div>
+            <p style="margin-top: 1rem; font-size: 1.2rem; font-weight: 600;">AI Processing...</p>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentDemo = {
+            faceShape: 'oval',
+            hairType: 'straight',
+            skinTone: 'fair',
+            style: 'classic'
+        };
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            initializeScrollHandler();
+            initializePhotoUpload();
+            animateOnScroll();
+        });
+
+        // Initialize scroll handler for navbar
+        function initializeScrollHandler() {
+            const header = document.getElementById('header');
+
+            window.addEventListener('scroll', function () {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.getElementById('hamburger');
+
+            if (navLinks && hamburger) {
+                navLinks.classList.toggle('active');
+                hamburger.classList.toggle('active');
+            }
+        }
+
+        // Initialize photo upload functionality
+        function initializePhotoUpload() {
+            const photoUpload = document.getElementById('photoUpload');
+
+            if (photoUpload) {
+                photoUpload.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        processPhoto(file);
+                    }
+                });
+            }
+        }
+
+        // Upload photo function
+        function uploadPhoto() {
+            const photoUpload = document.getElementById('photoUpload');
+            if (photoUpload) {
+                photoUpload.click();
+            }
+        }
+
+        // Process uploaded photo
+        function processPhoto(file) {
+            const aiProcessing = document.getElementById('aiProcessing');
+            const processingSteps = document.getElementById('processingSteps');
+
+            // Show processing animation
+            aiProcessing.style.display = 'block';
+
+            const steps = [
+                'Detecting facial features...',
+                'Analyzing face shape...',
+                'Determining skin tone...',
+                'Mapping facial landmarks...',
+                'Processing hair characteristics...',
+                'Generating style recommendations...',
+                'Finalizing AI analysis...'
+            ];
+
+            let currentStep = 0;
+
+            const stepInterval = setInterval(() => {
+                if (currentStep < steps.length) {
+                    processingSteps.textContent = steps[currentStep];
+                    currentStep++;
+                } else {
+                    clearInterval(stepInterval);
+                    showResults();
+                }
+            }, 1000);
+        }
+
+        // Show AI analysis results
+        function showResults() {
+            const aiProcessing = document.getElementById('aiProcessing');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+
+            // Hide processing
+            aiProcessing.style.display = 'none';
+
+            // Show loading overlay
+            loadingOverlay.style.display = 'flex';
+
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+
+                // Show results (in a real implementation, this would show actual AI results)
+                alert('🎉 AI Analysis Complete!\n\nBased on your photo, we recommend:\n\n✨ Layered Bob with Side Bangs\n🎨 Warm Caramel Highlights\n💫 Soft Beach Waves Styling\n\nCompatibility Score: 96%\n\nWould you like to book an appointment with a nearby salon?');
+
+                // Scroll to demo section
+                document.querySelector('.demo-section').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 3000);
+        }
+
+        // Update demo based on user selections
+        function updateDemo(category, value) {
+            // Update active button
+            const buttons = document.querySelectorAll(`[onclick*="${category}"]`);
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Update demo state
+            currentDemo[category] = value;
+
+            // Generate new recommendations
+            generateRecommendations();
+        }
+
+        // Generate AI recommendations based on demo inputs
+        function generateRecommendations() {
+            const resultGrid = document.getElementById('resultGrid');
+
+            // Sample recommendations based on inputs (in real implementation, this would use actual AI)
+            const recommendations = {
+                oval: {
+                    straight: ['Long Layers', 'Blunt Bob', 'Side Swept'],
+                    wavy: ['Beach Waves', 'Layered Lob', 'Textured Bob'],
+                    curly: ['Curly Shag', 'Defined Curls', 'Curly Bob'],
+                    coily: ['Natural Afro', 'Twist Out', 'Protective Style']
+                },
+                round: {
+                    straight: ['Long Straight', 'Asymmetrical Bob', 'Side Part'],
+                    wavy: ['Long Waves', 'Angled Lob', 'Voluminous Waves'],
+                    curly: ['Long Curls', 'Curly Layers', 'Defined Texture'],
+                    coily: ['High Top Fade', 'Braided Crown', 'Twist Updo']
+                },
+                square: {
+                    straight: ['Soft Layers', 'Long Bob', 'Face Framing'],
+                    wavy: ['Soft Waves', 'Textured Lob', 'Bouncy Curls'],
+                    curly: ['Layered Curls', 'Curly Fringe', 'Volume Curls'],
+                    coily: ['Curly Top', 'Defined Coils', 'Natural Volume']
+                },
+                heart: {
+                    straight: ['Chin Length', 'Blunt Cut', 'Full Bangs'],
+                    wavy: ['Wavy Bob', 'Textured Ends', 'Side Waves'],
+                    curly: ['Curly Bob', 'Spiral Curls', 'Bouncy Texture'],
+                    coily: ['Short Coils', 'Tapered Cut', 'Coily Bob']
+                }
+            };
+
+            const styles = recommendations[currentDemo.faceShape][currentDemo.hairType];
+            const scores = [95, 92, 89]; // Sample matching scores
+
+            resultGrid.innerHTML = '';
+
+            styles.forEach((style, index) => {
+                const resultCard = document.createElement('div');
+                resultCard.className = 'result-card';
+                resultCard.innerHTML = `
+                    <div class="result-image">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <div class="result-title">${style}</div>
+                    <div class="result-score">${scores[index]}% Match</div>
+                `;
+                resultGrid.appendChild(resultCard);
+            });
+        }
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for scroll animations
+            const animateElements = document.querySelectorAll('.feature-card, .stat-card, .analysis-step');
+            animateElements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const navLinks = document.getElementById('navLinks');
+            const hamburger = document.querySelector('.hamburger');
+
+            if (navLinks && hamburger && !navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+                navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.querySelector('.feature-icon').style.transform = 'scale(1.1) rotate(5deg)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.querySelector('.feature-icon').style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+
+        // Initialize demo with default recommendations
+        window.addEventListener('load', function () {
+            generateRecommendations();
+        });
+    </script>
+</body>
+
+</html>
